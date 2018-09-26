@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt" 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="'layout/LayoutPadrao'">
+<head>
+</head>
+
+<body>
+
+		<section layout:fragment="conteudo">
+		
+			<div class="page-header">
+				<div class="container-fluid">
+				<div class="row" > 
+					<div class="col-sm-10" >
+						<h1>Manter Cadastro de Tipologia</h1>
+					</div>
+					<div class="col-sm-2" >
+						<div class="aw-page-header-controls" >
+							<a class="btn btn-default" th:href="@{/tipologia}">
+								<i class="glyphicon glyphicon-search"><span class="hidden-xs hidden-sm"> Pesquisa </span> </i>
+							</a>
+						</div>
+					</div>
+				</div>
+				</div>
+			</div>
+			
+			<div class="container-fluid">
+				<th:block th:include="fragments/MensagemSucesso"></th:block>	
+				<form method="POST" th:object="${tipologia}"  class="form-vertical  js-form-loading" th:action="@{/tipologia/novo}" >
+				<th:block th:include="fragments/MensagensErroValidacao"></th:block>	
+					<div class="row">
+						<input id="id"  name="id" type="hidden" class="form-control" th:field="*{id}" th:value="*{id}" />
+						<div class="col-sm-9 form-group" sincco:classforerror="descricao" >
+							<label for="input-produto-nome">Descrição</label>
+							<input id="descricao" name="descricao" type="text" class="form-control" th:field="*{descricao}" th:value="*{descricao}" />
+						</div>
+						
+						<div class="col-sm-3 form-group" sincco:classforerror="sigla" >
+							<label for="input-tipologia-sigla">Sigla</label>
+							<input id="sigla" name="sigla" type="text" class="form-control" th:field="*{sigla}" th:value="*{sigla}" />
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="col-sm-6 form-group" sincco:classforerror="moradia" >
+							<label for="input-produto-name" > Moradia </label>
+							<select id="moradia" class="form-control" th:field="*{moradia}"    >
+								<option value="" >Selecione..</option>
+								<option th:each="moradia : ${listarMoradia}" th:value="${moradia.id}" th:text="${moradia.tipoMoradia}"></option>
+							</select>
+						</div>	
+						<div class="col-sm-6 form-group"  th:classappend="${#fields.hasErrors('leitura')} ? has-error" >
+							<label for="input-tipologia-leitura" > Leitura </label>
+							<select id="leitura" class="form-control" th:field="*{leitura}"  >
+								<option value="" >Selecione..</option>
+								<option th:each="leitura : ${tipoLeituras}" th:value="${leitura.id}" th:text="${leitura.sigla}"  ></option>
+							</select>
+						</div>	
+					</div>
+
+					<div class="form-group">
+						<button class="btn  btn-primary" type="submit">Salvar</button>
+					</div>
+				</form>
+				
+				
+			</div>
+
+</section>
+
+</body>
+</html>

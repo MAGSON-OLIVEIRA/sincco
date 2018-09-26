@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt" 
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sincco="http://sincco.com"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+<body>
+<aside class="aw-layout-sidebar  js-sidebar"  th:fragment="layout-sidebar" >
+		<div class="aw-layout-sidebar__content">	
+		    <nav class="aw-menu  js-menu">
+		      <ul class="aw-menu__list">
+		
+		        <li class="aw-menu__item">
+		          <a href="#"><i class="fa  fa-fw  fa-home"></i><span>Sincco</span></a>
+		        </li>
+		
+		        <li class="aw-menu__item">
+		          <a href="#">
+		            <i class="fa  fa-fw  fa-file-text"></i><span>Serviços</span>
+		            <i class="aw-menu__navigation-icon  fa"></i>
+		          </a>
+		      
+		          <ul class="aw-menu__list  aw-menu__list--sublist">
+		            <li class="aw-menu__item  aw-menu__item--link" sincco:menu="@{/servico/novo}" sec:authorize-url="/servico/novo" ><a th:href="@{/servico/novo}">Novo Serviço</a></li>
+		            <li class="aw-menu__item  aw-menu__item--link" sincco:menu="@{/servico}" sec:authorize-url="/servico" ><a th:href="@{/servico}">Pesquisa</a></li>
+		            <li class="aw-menu__item  aw-menu__item--link" sincco:menu="@{/servico/cliente}" sec:authorize-url="/servico/cliente" ><a th:href="@{/servico/cliente}">Pesquisa Cliente</a></li>
+		          </ul>
+		        </li>
+		
+				<li class="aw-menu__item">
+		          <a href="#">
+		            <i class="fa  fa-fw  fa-database"></i><span>Cadastro</span>
+		            <i class="aw-menu__navigation-icon  fa"></i>
+		          </a>
+		
+		          <ul class="aw-menu__list  aw-menu__list--sublist">
+		          
+		          	<li class="aw-menu__item  aw-menu__item--link" sincco:menu="@{/cepServico.*}" ><a th:href="@{/cepServico}">CEPs</a></li>
+		            <li class="aw-menu__item  aw-menu__item--link" sincco:menu="@{/produto.*}" sec:authorize="hasAuthority('CADASTRA_PRODUTO')" ><a th:href="@{/produto}">Produto</a></li>
+		            <li class="aw-menu__item  aw-menu__item--link" sincco:menu="@{/tipologia.*}" sec:authorize="hasAuthority('CADASTRA_TIPOLOGIA')" ><a th:href="@{/tipologia}">Tipologia</a></li>
+
+		          </ul>
+		        </li>
+		        <li class="aw-menu__item" sec:authorize="hasAuthority('CADASTRA_USUARIO')">
+		          <a href="#">
+		            <i class="fa  fa-fw  fa-user-plus"></i><span>Usuário</span>
+		            <i class="aw-menu__navigation-icon  fa"></i>
+		          </a>
+		          <ul class="aw-menu__list  aw-menu__list--sublist">
+		            <li class="aw-menu__item  aw-menu__item--link" sincco:menu="@{/usuario.*}"  ><a th:href="@{/usuario}">Cadastro de usuário</a></li>
+		          </ul>
+		        </li>
+		
+		      </ul>
+		    </nav>
+		</div>
+	</aside>
+	</body>
+</html>

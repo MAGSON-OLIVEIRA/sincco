@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<div class="modal  fade" id="adicionaItens" tabindex="-1" role="dialog" th:fragment="adicionaItens">
+     <div class="modal-dialog">
+            <div class="modal-content">
+                  <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><i>&times;</i></button>
+                  <h4 class="modal-title">Adicionar Itens</h4>
+                  </div>
+                  <div class="modal-body">
+                        <div class="alert alert-danger alert-dismissible hidden js-mensagem-erro-add" role="alert" >
+                             <!-- <button type="button" class="close" data-dismiss="alert" > <span aria-hidden="true">&times;</span> </button>  --> 
+                              <div> <i class="fa fa-exclamation-circle" > É necesario infomar todos os campos. </i> </div>
+                        </div>
+                    <form class="form" th:action="@{/servico/itens}" >                       
+                         <div class="row">
+                                         <div class="col-sm-4 form-group">
+                                               <label for="input-produto-nome">Medição</label>
+                                               <input id="medicaoModal" name="medicaoModal" type="text" class="form-control" maxlength="3" pattern="([0-9]{3})" />
+                                         </div>
+                                         <div class="col-sm-4 form-group" >
+                                               <label for="input-produto-nome">Quantidade de Moradores</label>
+                                               <input id="qtdMoradoresModal" name="qtdMoradoresModal" type="text" class="form-control" maxlength="1" pattern="([0-9]{1})" />
+                                         </div>
+                                         <div class="col-sm-4 form-group" >
+                                               <label for="input-produto-nome">Dias</label>
+                                               <input id="diasMesModal" name="diasMesModal" type="text" class="form-control" maxlength="2" pattern="([0-9]{2})" />
+                                         </div>
+                                   </div>
+                        <button type="submit" class="btn  btn-primary js-adicionar-item-btn">Adicionar</button>
+                        <a href="#" class="btn  btn-default" data-dismiss="modal">Cancelar</a> 
+                    </form>
+
+            </div>
+            </div>
+     </div>
+</div>
+
+</html>
+
+ 

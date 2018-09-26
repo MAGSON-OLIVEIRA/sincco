@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+	
+<div class="modal  fade" id="pesquisaRapidaCepsServicos" tabindex="-1"
+	role="dialog" th:fragment="pesquisaRapidaCepsServicos">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" data-dismiss="modal">
+					<i>&times;</i>
+				</button>
+				<h4 class="modal-title">Pesquisar CEP</h4>
+			</div>
+			<div class="modal-body">
+				        <div class="alert alert-danger alert-dismissible hidden js-mensagem-erro2" role="alert" >
+                              <button type="button" class="close" data-dismiss="alert" > <span aria-hidden="true">&times;</span> </button>
+                              <div> <i class="fa fa-exclamation-circle" > Informe pelo menos 5 numeros. </i> </div>
+                        </div>
+					<form class="form" th:action="@{/cepServico}">
+						<div class="form-group">
+							<label class="control-label" for="cepServicoModal">CEP</label> 
+							<input id="cepServicoModal" type="text" class="form-control js-cep" autofocus="autofocus" maxlength="10" />
+						</div>
+						<button type="submit" class="btn  btn-primary js-pesquisa-rapida-cep-btn">Pesquisar</button>
+						<a href="#" class="btn  btn-default" data-dismiss="modal">Cancelar</a>
+					</form>
+					
+				 <div id="containerTabelaPesquisaRapidaCep">
+                 </div>
+			</div>
+		</div>
+	</div>
+<th:block th:replace="hbs/TabelaPesquisaRapidaCep" ></th:block>
+</div>
+
+</html>

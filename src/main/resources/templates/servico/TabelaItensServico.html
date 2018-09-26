@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+           <div class="table-responsive tabela-simples-sc" >
+           
+                 <table class="table tale-hover" >
+                       <thead>
+                             <tr>
+                             	<th class="table-usuario-col-cpfCnpj" >#</th>
+                                   <th class="table-usuario-col-cpfCnpj" >Competencia</th>
+                                   <th class="table-usuario-col-cpfCnpj" >Moradores</th>
+                                   <th class="table-usuario-col-email">Dias Medidos</th>
+                                   <th class="table-usuario-col-nome" >Medição</th>
+                                   <th class="table-usuario-col-nome">Por litros</th>   
+                                   <th class="table-usuario-col-nome">Diária</th>
+                                   <th class="table-usuario-col-nome">Diária Por Moradores</th>  
+                             </tr>
+                       </thead>
+                       <tbody>
+                             <tr class="js-tabela-item" th:each="item  : ${itens}" data:total-medida="${totalMedida}">
+                            		 <td th:text="${item.contador}" ></td>
+                                    <td th:text="${{item.dataCompetencia}}"></td>
+                                   <td th:text="${item.quantidadeMoradores}" ></td>
+                                   <td th:text="${item.diasMedido}"></td>
+                                   <td th:text="${item.medida}"></td>  
+                                   
+								   <td th:text="${#numbers.formatDecimal(item.medidaLitro, 0, 'POINT', 0, 'POINT')}" >   </td>
+                                   <td th:text="${#numbers.formatDecimal(item.medidaDiaria, 0, 'POINT', 0, 'POINT')}" >  </td>
+                                   <td th:text="${item.medidaDiariaPorMoradores}"> </td>
+                                       <td class="sc-tabela-item__painel-exclusao">
+                                         <button type="button" class="btn btn-danger js-excluir-item-btn" data:contador-itens="${item.contador}" title="Excluir" >
+                                               <i class="fa fa-eraser"></i>
+                                         </button>
+                                   </td> 
+                             </tr>
+                       </tbody>
+                 </table>
+           </div>   
+           
+           	<div class="bw-tabela-cervejas__vazio" th:if="${itens.empty}">
+				<i class="glyphicon  glyphicon-th-list"></i> 
+				<span>Ainda não tem itens para esse serviço.</span>
+			</div>
+			<br/>
+             
+</html>

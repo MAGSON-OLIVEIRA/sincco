@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:th="http://www.thymeleaf.org"
+	layout:decorate="'layout/LayoutPadrao'"
+	xmlns:data="http://www.thymeleaf.org/extras/data"
+	xmlns:sincco="http://sincco.com"
+    xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+
+<head>
+	<title>Pesquisa</title>
+</head>
+
+<body>
+<section layout:fragment="conteudo">
+	<div class="page-header">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-xs-10">
+					<h1>Pesquisa</h1>
+				</div>
+				
+				<div class="col-xs-2">
+					<div class="aw-page-header-controls">
+						<a class="btn  btn-default" th:href="@{/servico/novo}">
+							<i class="glyphicon  glyphicon-plus-sign"></i> <span class="hidden-xs  hidden-sm">Novo Servico</span>
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="container-fluid">
+		<form method="GET" th:object="${servicoFilter}" th:action="@{/servico}" sec:authorize-url="/servico">
+			<div class="row">
+				<div class="form-group  col-sm-6">
+					<label class="control-label" for="nomeCliente">Nome</label>
+					<input type="text" class="form-control" id="nomeUsuario" th:field="*{nomeUsuario}"/>
+				</div>
+				
+				<div class="form-group  col-sm-6">
+					<label class="control-label" for="nomeCliente">E-mail</label>
+					<input type="text" class="form-control" id="email" th:field="*{emailUsuario}"/>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="form-group  col-sm-2">
+					<label class="control-label" for="codigo">Código</label>
+					<input type="text" class="form-control" id="id" autofocus="autofocus" th:field="*{id}"/>
+				</div>
+                <div class="form-group  col-sm-2">
+                     <label for="status" class="control-label">Status</label>
+		             <select id="status" class="form-control" th:field="*{ativo}">
+		               <option value="">Todos os status</option>
+		               <option value="true">Ativo</option>
+		               <option value="false">Solicitado</option>
+		            </select>
+               </div>
+				<div class="form-group  col-sm-5">
+					<label for="dataCriacaoInicial">Data de criação</label>
+					<div class="form-inline">
+						<input type="text" class="form-control  aw-form-control-inline-sm  js-date" id="dataCriacaoInicial" 
+							th:field="*{desde}" autocomplete="off"/>
+						<label for="dataCriacaoFinal" class="aw-form-label-between">até</label>
+						<input type="text" class="form-control  aw-form-control-inline-sm  js-date" id="dataCriacaoInicial" 
+							th:field="*{ate}" autocomplete="off"/>
+					</div>
+				</div>
+				
+				<div class="form-group  col-sm-3">
+					<label class="control-label" for="nomeCliente">CEP:</label>
+					<input type="text" class="form-control js-cep" id="cep" th:field="*{cep}"/>
+				</div>
+				
+			</div>
+			<button type="submit" class="btn  btn-primary">Pesquisar</button>
+		</form>
+		
+		<form method="GET" th:object="${servicoFilter}" th:action="@{/servico/cliente}" sec:authorize-url="/servico/cliente">
+			<div class="row">
+				<div class="form-group  col-sm-2">
+					<label class="control-label" for="codigo">Código</label>
+					<input type="text" class="form-control" id="id" autofocus="autofocus" th:field="*{id}"/>
+				</div>
+                <div class="form-group  col-sm-2">
+                     <label for="status" class="control-label">Status</label>
+		             <select id="status" class="form-control" th:field="*{ativo}">
+		               <option value="">Todos os status</option>
+		               <option value="true">Ativo</option>
+		               <option value="false">Solicitado</option>
+		            </select>
+               </div>
+				<div class="form-group  col-sm-5">
+					<label for="dataCriacaoInicial">Data de criação</label>
+					<div class="form-inline">
+						<input type="text" class="form-control  aw-form-control-inline-sm  js-date" id="dataCriacaoInicial" 
+							th:field="*{desde}" autocomplete="off"/>
+						<label for="dataCriacaoFinal" class="aw-form-label-between">até</label>
+						<input type="text" class="form-control  aw-form-control-inline-sm  js-date" id="dataCriacaoInicial" 
+							th:field="*{ate}" autocomplete="off"/>
+					</div>
+				</div>
+				
+				<div class="form-group  col-sm-3">
+					<label class="control-label" for="nomeCliente">CEP:</label>
+					<input type="text" class="form-control js-cep" id="cep" th:field="*{cep}"/>
+				</div>
+				
+			</div>
+			<button type="submit" class="btn  btn-primary">Pesquisar</button>
+		</form>
+		
+		<div class="table-responsive  bw-tabela-simples">
+			<table class="table  table-hover">
+	            <thead>
+	            	<tr>
+	                	<th>Código:</th>
+	                	<th>
+	                		<sincco:order page="${pagina}" field="u.nome" text="Usuario"/>
+	                	</th>
+	                	<th>Data de criação:</th>
+	                	<th>Produto:</th>
+	                	<th>Tipologia:</th>
+	                	<th>CEP:</th>
+	                	<th></th>
+	                 	<th class="table-col-acoes"></th>
+					</tr>
+				</thead>
+				
+	            <tbody>
+					<tr th:each="servico : ${pagina.conteudo}">
+						<td th:text="${servico.id}"></td>
+						<td th:text="${servico.usuario.nome}"></td>
+						<td th:text="${{servico.dataInicio}}"></td>
+						<td th:text="${servico.produto.siglaProduto}"></td>
+						<td th:text="${servico.tipologia.sigla}"></td>
+						<td th:text="${servico.cepServico.cep}"></td>
+						
+						<td >
+							<p th:if="${{servico.ativo == true}}">Ativo</p>
+							<p th:if="${{servico.ativo == false}}">Solicitado</p>
+						</td>
+						
+
+						
+	                 	<td class="text-center">
+		   					<a class="btn  btn-link  btn-xs  js-tooltip" title="Editar" href="#">
+		   						<i class="glyphicon glyphicon-pencil"></i>
+		   					</a>
+	                 	</td>
+	                </tr>
+	                
+	                <tr th:if="${pagina.vazia}">
+	                	<td colspan="7">Nenhum servico encontrada</td>
+	                </tr>
+	             </tbody>
+	         </table>
+		</div>
+		
+
+		
+		 <div  class="col-sm-12 text-center" th:if="${not pagina.vazia}" >
+ 			<nav>
+ 				<ul class="pagination pagination-sm"  th:with="paginaAtual=${pagina.atual}" >
+ 					<li th:class="${pagina.primeira}?disabled" > 
+ 						<a th:href="${pagina.urlParaPagina(paginaAtual - 1)}" th:remove="${pagina.primeira}?tag" > <span>&laquo;</span> </a>
+ 					</li>
+ 					
+ 					<th:block th:each="p : ${#numbers.sequence(1, pagina.total)}"  th:with="numeroPagina=${p - 1}, paginaAtual=${pagina.atual}" >
+ 						<li th:class="${paginaAtual == numeroPagina} ? active" > 
+ 							<a th:href="${pagina.urlParaPagina(numeroPagina)}" >[[${p}]]</a>
+ 						</li>
+ 					</th:block>
+ 					
+ 					<li th:class="${pagina.ultima}?disabled" > 
+ 						<a th:href="${pagina.urlParaPagina(paginaAtual + 1)}" th:remove="${pagina.ultima}?tag" > <span>&raquo;</span> </a> 
+ 					</li>
+ 				</ul>
+ 			</nav>
+ 		</div>
+		
+	</div>
+</section>
+
+</body>
+</html>

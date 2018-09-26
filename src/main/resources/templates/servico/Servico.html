@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:th="http://www.thymeleaf.org"
+	layout:decorate="'layout/LayoutPadrao'"
+	xmlns:data="http://www.thymeleaf.org/extras/data"
+	xmlns:sincco="http://sincco.com">
+
+<head>
+<title>Sincco</title>
+</head>
+
+<section layout:fragment="conteudo">
+
+	<div class="page-header">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-xs-10">
+					<h1>Serviços</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="container-fluid">
+		<form method="POST" th:action="@{/servico/novo}" th:object="${servico}" class="js-formulario-servico" >
+		<sincco:message/>
+		<input type="hidden" id="uuid"  th:field="*{uuid}" />
+			<div class="row">
+				<div class="col-sm-4">
+					<div class="aw-box">
+						<div class="aw-box__icon">
+							<i class="fa  fa-area-chart fa-3x"></i>
+						</div>
+						<div class="aw-box__value"><span class="js-resulta-total-media" th:text="${{servico.totalMedida}}"  >0</span> </div>
+						<div class="aw-box__title">Total Medido</div>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="aw-box">
+						<div class="aw-box__icon">
+							<i class="fa  fa-calendar  fa-3x"></i>
+						</div>
+						<div class="aw-box__value" th:text="${{servico.dataInicio}}" >09-jul-2018</div>
+						<div class="aw-box__title">Data</div>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="aw-box">
+						<div class="aw-box__icon">
+							<i class="fa  fa-tag  fa-3x"></i>
+						</div>
+						<div class="aw-box__value">Serviço</div>
+						<div class="aw-box__title" th:if="${{servico.ativo == true}}" >Ativo</div>
+                        <div class="aw-box__title" th:if="${{servico.ativo == false}}" >Solicitado</div>
+					</div>
+				</div>
+
+				<!--  
+				<div class="col-sm-3">
+					<div class="aw-box">
+						<div class="aw-box__icon">
+							<i class="fa  fa-calendar  fa-3x"></i>
+						</div>
+						<div class="aw-box__value">
+							<span class="js-tooltip">Hoje</span>
+						</div>
+						<div class="aw-box__title">Criação</div>
+					</div>
+				</div>
+				-->
+			</div>
+
+			<div class="row">
+				<div class="form-group  col-sm-2  bw-required" sincco:classforerror="produto.id" >
+					<label class="control-label" for="produto">Produto</label>
+					<div class="input-group">
+						<select id="produto" class="form-control" th:field="*{produto}">
+							<option value="">Selecione o Produto</option>
+							<option th:each="produto : ${listaProdutos}"
+								th:value="${produto.id}" th:text="${produto.siglaProduto}"></option>
+						</select>
+					</div>
+				</div>
+
+				<div class="form-group  col-sm-4  bw-required" sincco:classforerror="tipologia.id">
+					<label class="control-label" for="descricaoTipologia">Tipologia</label>
+					<div class="input-group">
+						<input id="descricaoTipologia" type="text" readonly="readonly" th:field="*{tipologia.sigla}"
+							class="form-control"
+							placeholder="Clique na lupa para pesquisar o Tipo de Imóvel." />
+						<input id="codigoTipologia" type="hidden" th:field="*{tipologia}" /> 
+						<span class="input-group-btn" sincco:classforerror="tipologia.id">
+							<button class="btn  btn-default  js-tooltip" type="button"
+								title="Pesquisa avançada" data-toggle="modal"
+								data-target="#pesquisaRapidaTipologias">
+								<i class="glyphicon  glyphicon-search"></i>
+							</button>
+						</span>
+					</div>
+				</div>
+
+				<div class="form-group  col-sm-4  bw-required" sincco:classforerror="cepServico.id">
+					<label class="control-label" for="nomeCep">CEP</label>
+					<div class="input-group">
+						<input id="nomeCep" type="text" readonly="readonly" th:field="*{cepServico.cep}"
+							class="form-control" placeholder="Clique na lupa para pesquisar o CEP."  /> 
+							<input id="codigoCep" type="hidden" th:field="*{cepServico}" /> 
+							<span class="input-group-btn" sincco:classforerror="cepServico.id">
+							<button class="btn  btn-default  js-tooltip" type="button"
+								title="Pesquisa avançada" data-toggle="modal"
+								data-target="#pesquisaRapidaCepsServicos">
+								<i class="glyphicon  glyphicon-search"></i>
+							</button>
+						   </span>
+					</div>
+
+				</div>
+
+				<div class="form-group  col-sm-2 bw-required" sincco:classforerror="unidadeConsumidora">
+					<label class="control-label" for="unidadeConsumidora">Und.
+						Consumidora</label>
+					<div class="input-group">
+                        <input type="text"  maxlength="9" pattern="([0-9]{9})" class="form-control  js-n-comun"
+                          id="unidadeConsumidora" th:field="*{unidadeConsumidora}" />
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="form-group  col-lg-12">
+					<ul class="nav nav-tabs  js-abas-venda">
+						<li role="presentation" class="active"><a href="#medidas">Medidas</a></li>
+						<li role="presentation"><a href="#entrega">Outros</a></li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="tab-content">
+				<div class="tab-pane active" id="medidas">
+					<div class="row">
+						<div class="form-group  col-lg-12">
+							<a class="btn btn-default js-tooltip"
+								data-target="#adicionaItens" data-toggle="modal"
+								title="Adicionar Itens"> <i
+								class="glyphicon glyphicon-plus-sign"> <span
+									class="hidden-xs hidden-sm"> Add. </span>
+							</i>
+							</a>
+						</div>
+					</div>
+					<div class="bw-tabela-cervejas js-tabela-itens-continer">
+						<th:block th:replace="servico/TabelaItensServico" ></th:block>
+					</div>
+				</div>
+
+				<div class="tab-pane" id="entrega">
+				   <!-- 
+					<div class="row">
+						<div class="form-group  col-sm-6">
+							<label class="control-label" for="dataEntrega">Data da Inicio</label>
+							<input type="text" class="form-control js-date" id="dataInicio" th:field="*{dataInicio}"/>
+						</div>
+					
+					</div>
+					-->
+					<div class="row">
+						<div class="form-group  col-sm-12">
+							<textarea class="form-control" id="dataEntrega" rows="5" 
+								placeholder="Alguma observação  desse serviço ?" th:field="*{observacao}"></textarea>
+						</div>
+					</div>
+				</div>
+				
+			</div>
+
+			<div class="row" style="clear: both">
+				<div class="col-lg-12">
+                              <div class="btn-group">
+                                   <button type="submit" class="btn  btn-primary js-submit-btn" data:acao="salvar" >Salvar</button>
+                                   <button type="button" class="btn  btn-primary  dropdown-toggle"
+                                         data-toggle="dropdown">
+                                         <span class="caret"></span>
+                                   </button>
+                                   <ul class="dropdown-menu">
+                                         <li><a href="#" class="js-submit-btn" data:acao="ativar" >Salvar e ativar serviço.</a></li>
+                                         <li><a href="#" class="js-submit-btn" data:acao="enviarEmail" >Salvar e enviar por e-mail</a></li>
+                                   </ul>
+                              </div>
+					<button class="btn  btn-danger">Cancelar</button>
+				</div>
+			</div>
+		</form>
+	</div>
+
+	<th:block th:replace="tipologia/PesquisaRapidaTipologias :: pesquisaRapidaTipologias"></th:block>
+	<th:block th:replace="cepServico/PesquisaRapidaCepsServicos :: pesquisaRapidaCepsServicos"></th:block>
+	<th:block th:replace="servico/AdicionarItens :: adicionaItens"></th:block>
+</section>
+
+<th:block layout:fragment="javascript-extra">
+	<script th:src="@{/javascripts/vendors/handlebars.min.js}"></script>
+	<script th:src="@{/javascripts/tipologia.pesquisa-rapida.js}"></script>
+	<script th:src="@{/javascripts/cep.pesquisa-rapida.js}"></script>
+	<script th:src="@{/javascripts/adicionar.itens-modal.js}">   </script>
+	<script th:src="@{/javascripts/btn-submit.js}">   </script>
+	<script>
+		$(function() {
+			$('.js-abas-venda a').click(function(e) {
+				e.preventDefault();
+				$(this).tab('show');
+			});
+		});
+	</script>
+</th:block>
+
+</html>

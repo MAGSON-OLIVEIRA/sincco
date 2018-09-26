@@ -1,0 +1,30 @@
+<script type="text/x-handlebars-template" id="tabela-pesquisa-rapida-cep">
+<div class="table-responsive  bw-tabela-simples" style="margin-top: 15px">
+    <table class="table  table-hover">
+          <thead>
+                 <tr>
+                     <th class="col-sm-2">Logradouro</th>
+                     <th class="col-sm-2">Cidade</th>
+					 <th class="col-sm-2">UF</th>
+                     <th class="col-sm-2">Cep</th>
+                 </tr>
+          </thead>
+          <tbody>
+                  {{#if .}}
+                   {{#each .}}
+                    <tr data-id="{{id}}" data-cep="{{cep}}" class="js-cep-pesquisa-rapida" >
+						<td >{{logradouro}}</td>
+                        <td >{{cidade.nome}}</td>
+						<td >{{estado.sigla}}</td>
+						<td >{{cep}}</td>
+                    </tr>
+                   {{/each}}
+                  {{else}}
+                   <tr>
+                     <td colspan="2">Nenhum CEP encontrado</td>
+                   </tr>
+                 {{/if}}
+         </tbody>
+    </table>
+</div>
+</script>

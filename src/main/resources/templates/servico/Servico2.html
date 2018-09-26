@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	xmlns:th="http://www.thymeleaf.org"
+	layout:decorate="'layout/LayoutPadrao'"
+	xmlns:data="http://www.thymeleaf.org/extras/data"
+	xmlns:sincco="http://sincco.com">
+
+<head>
+<title>Sincco</title>
+</head>
+
+<section layout:fragment="conteudo">
+
+	<div class="page-header">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-xs-10">
+					<h1>Sincco Serviços</h1>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="container-fluid">
+		<form method="POST" th:action="@{/servico/nova}" th:object="${servico}">
+		<input type="hidden" id="uuid"  th:field="${uuid}" />
+			<div class="row">
+				<div class="col-sm-4">
+					<div class="aw-box">
+						<div class="aw-box__icon">
+							<i class="fa  fa-area-chart fa-3x"></i>
+						</div>
+						<div class="aw-box__value"><span class="js-resulta-total-media" >0</span> </div>
+						<div class="aw-box__title">Total Medido</div>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="aw-box">
+						<div class="aw-box__icon">
+							<i class="fa  fa-calendar  fa-3x"></i>
+						</div>
+						<div class="aw-box__value">09-jul-2018</div>
+						<div class="aw-box__title">Data</div>
+					</div>
+				</div>
+				<div class="col-sm-4">
+					<div class="aw-box">
+						<div class="aw-box__icon">
+							<i class="fa  fa-tag  fa-3x"></i>
+						</div>
+						<div class="aw-box__value">Serviço</div>
+						<div class="aw-box__title">Status</div>
+					</div>
+				</div>
+
+				<!--  
+				<div class="col-sm-3">
+					<div class="aw-box">
+						<div class="aw-box__icon">
+							<i class="fa  fa-calendar  fa-3x"></i>
+						</div>
+						<div class="aw-box__value">
+							<span class="js-tooltip">Hoje</span>
+						</div>
+						<div class="aw-box__title">Criação</div>
+					</div>
+				</div>
+				-->
+			</div>
+
+			<div class="row">
+				<div class="form-group  col-sm-2  bw-required">
+					<label class="control-label" for="nomeCliente">Produto</label>
+					<div class="input-group">
+						<select id="produto" class="form-control">
+							<option value="">Selecione o Produto</option>
+							<option th:each="produto : ${listaProdutos}"
+								th:value="${produto.id}" th:text="${produto.siglaProduto}"></option>
+						</select>
+					</div>
+				</div>
+
+				<div class="form-group  col-sm-4  bw-required">
+					<label class="control-label" for="descricaoTipologia">Tipo
+						Imóvel(Fazer cadastro de Tipo)</label>
+					<div class="input-group">
+						<input id="descricaoTipologia" type="text" readonly="readonly"
+							class="form-control"
+							placeholder="Clique na lupa para pesquisar o Tipo de Imóvel." />
+						<input id="codigoTipologia" type="hidden" /> <span
+							class="input-group-btn">
+							<button class="btn  btn-default  js-tooltip" type="button"
+								title="Pesquisa avançada" data-toggle="modal"
+								data-target="#pesquisaRapidaTipologias">
+								<i class="glyphicon  glyphicon-search"></i>
+							</button>
+						</span>
+					</div>
+				</div>
+
+				<div class="form-group  col-sm-4  bw-required">
+					<label class="control-label" for="nomeCep">CEP</label>
+					<div class="input-group">
+						<input id="nomeCep" type="text" readonly="readonly"
+							class="form-control"
+							placeholder="Clique na lupa para pesquisar o CEP." /> <input
+							id="codigoCep" type="hidden" /> <span class="input-group-btn">
+							<button class="btn  btn-default  js-tooltip" type="button"
+								title="Pesquisa avançada" data-toggle="modal"
+								data-target="#pesquisaRapidaCepsServicos">
+								<i class="glyphicon  glyphicon-search"></i>
+							</button>
+						</span>
+					</div>
+
+				</div>
+
+				<div class="form-group  col-sm-2">
+					<label class="control-label" for="valorDesconto">Und.
+						Consumidora</label>
+					<div class="input-group">
+						<input type="text" maxlength="14" class="form-control  js-plain"
+							id="valorDesconto" />
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="form-group  col-lg-12">
+					<ul class="nav nav-tabs  js-abas-venda">
+						<li role="presentation" class="active"><a href="#medidas">Medidas</a></li>
+						<li role="presentation"><a href="#planoAcao">Plano de
+								ação</a></li>
+					</ul>
+				</div>
+			</div>
+
+			<div class="tab-content">
+				<div class="tab-pane active" id="medidas">
+					<div class="row">
+						<div class="form-group  col-lg-12">
+							<a class="btn btn-default js-tooltip"
+								data-target="#adicionaItens" data-toggle="modal"
+								title="Adicionar Itens"> <i
+								class="glyphicon glyphicon-plus-sign"> <span
+									class="hidden-xs hidden-sm"> Add. </span>
+							</i>
+							</a>
+						</div>
+					</div>
+
+					<div class="bw-tabela-cervejas js-tabela-itens-continer">
+					
+                                   <!-- 
+                                   <div class="bw-tabela-cervejas__vazio">
+                                         <i class="glyphicon  glyphicon-plus-sign"></i>
+                                         <span>Você ainda não adicionou...</span>
+                                   </div>
+                                   -->
+					</div>
+
+				</div>
+
+				<div class="tab-pane" id="planoAcao">
+
+
+					<!-- sad fsad fdsa fasd f -->
+
+					<div class="row">
+						<div class="form-group  col-lg-12">
+							<ul class="nav nav-tabs  js-abas-venda">
+								<li role="presentation" class="active"><a href="#acao1">Acão1</a></li>
+								<li role="presentation"><a href="#acao2">Acão2</a></li>
+								<li role="presentation"><a href="#acao2">Acão3</a></li>
+							</ul>
+						</div>
+					</div>
+
+					<div class="tab-content">
+						<div class="tab-pane active" id="acao1">
+							<div class="row"></div>
+						</div>
+
+						<div class="tab-pane" id="acao2">
+							<div class="row"></div>
+						</div>
+
+						<div class="tab-pane" id="acao3">
+							<div class="row"></div>
+						</div>
+					</div>
+
+					<!-- sad fsad fdsa fasd f -->
+
+
+
+				</div>
+			</div>
+
+			<div class="row" style="clear: both">
+				<div class="col-lg-12">
+					<div class="btn-group">
+						<button type="submit" class="btn  btn-primary">Salvar</button>
+						<button type="button" class="btn  btn-primary  dropdown-toggle"
+							data-toggle="dropdown">
+							<span class="caret"></span>
+						</button>
+
+						<ul class="dropdown-menu">
+							<li><a href="#">Salvar e emitir ação</a></li>
+							<li><a href="#">Salvar e enviar por e-mail</a></li>
+						</ul>
+					</div>
+
+					<button class="btn  btn-danger">Cancelar</button>
+				</div>
+			</div>
+		</form>
+	</div>
+
+	<th:block th:replace="tipologia/PesquisaRapidaTipologias :: pesquisaRapidaTipologias"></th:block>
+	<th:block th:replace="cepservico/PesquisaRapidaCepsServicos :: pesquisaRapidaCepsServicos"></th:block>
+	<th:block th:replace="servico/AdicionarItens :: adicionaItens"></th:block>
+</section>
+
+<th:block layout:fragment="javascript-extra">
+	<script th:src="@{/javascripts/vendors/handlebars.min.js}"></script>
+	<script th:src="@{/javascripts/tipologia.pesquisa-rapida.js}"></script>
+	<script th:src="@{/javascripts/cep.pesquisa-rapida.js}"></script>
+	<script th:src="@{/javascripts/adicionar.itens-modal.js}">   </script>
+	<script>
+		$(function() {
+			$('.js-abas-venda a').click(function(e) {
+				e.preventDefault();
+				$(this).tab('show');
+			});
+		});
+	</script>
+</th:block>
+
+</html>

@@ -1,0 +1,26 @@
+<script type="text/x-handlebars-template" id="tabela-pesquisa-rapida-tipologia">
+<div class="table-responsive  bw-tabela-simples" style="margin-top: 15px">
+    <table class="table  table-hover">
+          <thead>
+                 <tr>
+                     <th class="col-sm-2">Descrição</th>
+                     <th class="col-sm-2">Sigla</th>
+                 </tr>
+          </thead>
+          <tbody>
+                  {{#if .}}
+                        {{#each .}}
+                  <tr data-id="{{id}}" data-descricao="{{descricao}}" class="js-tipologia-pesquisa-rapida" >
+                        <td >{{descricao}}</td>
+                        <td >{{sigla}}</td>
+                  </tr>
+                  {{/each}}
+                  {{else}}
+                 <tr>
+                     <td colspan="2">Nenhum cliente encontrado</td>
+                 </tr>
+                 {{/if}}
+         </tbody>
+    </table>
+</div>
+</script>
